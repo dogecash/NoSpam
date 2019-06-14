@@ -16,6 +16,14 @@ client.on("guildCreate", guild => {
     client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
+function case_insensitive_search(str, search_str) {
+    var result = str.search(new RegExp(search_str, "i"));
+
+    if (result > 0)
+        return true;
+    else
+        return false;
+}
 client.on("guildDelete", guild => {
     // this event triggers when the bot is removed from a guild.
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
@@ -38,12 +46,12 @@ client.on("message", async message => {
     // args = ["Is", "this", "the", "real", "life?"]
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if (message.content.toLowerCase().indexOf('18+') == 0 ||
-        message.content.toLowerCase().indexOf('my 18+ photos') == 0 ||
-        message.content.toLowerCase().indexOf('mes photos nues') == 0 ||
-        message.content.toLowerCase().indexOf('nakedphotos') == 0 ||
-        message.content.toLowerCase().indexOf('vip') == 0 ||
-        message.content.toLowerCase().indexOf('81zh2y') == 0) {
+    if (case_insensitive_search(message.content, '18+') ||
+        case_insensitive_search(message.content, 'my 18+ photos') ||
+        case_insensitive_search(message.content, 'mes photos nues') ||
+        case_insensitive_search(message.content, 'nakedphotos') ||
+        case_insensitive_search(message.content, 'vip') ||
+        case_insensitive_search(message.content, '81zh2y')) {
         await message.guild.ban(message.author.id)
         message.channel.send('Banned Spammer,Begone Spammer');
     }
@@ -164,12 +172,12 @@ client.on("message", async message => {
 //             }
 //         }
 //     }
-//     if (message.content.toLowerCase().indexOf('18+') == 0 ||
-//         message.content.toLowerCase().indexOf('my 18+ photos') == 0 ||
-//         message.content.toLowerCase().indexOf('mes photos nues') == 0 ||
-//         message.content.toLowerCase().indexOf('nakedphotos') == 0 ||
-//         message.content.toLowerCase().indexOf('vip') == 0 ||
-//         message.content.toLowerCase().indexOf('81zh2y') == 0) {
+//     if (case_insensitive_search(message.content,'18+') == 0 ||
+//         case_insensitive_search(message.content,'my 18+ photos') == 0 ||
+//         case_insensitive_search(message.content,'mes photos nues') == 0 ||
+//         case_insensitive_search(message.content,'nakedphotos') == 0 ||
+//         case_insensitive_search(message.content,'vip') == 0 ||
+//         case_insensitive_search(message.content,'81zh2y') == 0) {
 //         await message.guild.ban(message.author.id)
 //         message.channel.send('Banned Spammer,Begone Spammer');
 //     }
