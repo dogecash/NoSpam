@@ -53,7 +53,7 @@ client.on("message", async message => {
         case_insensitive_search(message.content, 'vip') ||
         case_insensitive_search(message.content, '81zh2y')) {
         await message.guild.ban(message.author.id)
-        message.channel.send('Banned Spammer,Begone Spammer');
+            //  message.channel.send('Banned Spammer,Begone Spammer');
     }
     // Let's go with a few common example commands! Feel free to delete or change those.
 
