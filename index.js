@@ -52,6 +52,11 @@ client.on("message", async message => {
         case_insensitive_search(message.content, 'nakedphotos') ||
         case_insensitive_search(message.content, 'vip') ||
         case_insensitive_search(message.content, '81zh2y')) {
+        if (message.deleted) {
+            //is deleted already by our other bot,no need to do anything in this case
+        } else {
+            await message.delete()
+        }
         await message.guild.ban(message.author.id)
             //  message.channel.send('Banned Spammer,Begone Spammer');
     }
