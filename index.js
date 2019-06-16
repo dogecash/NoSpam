@@ -51,6 +51,14 @@ client.on("message", async message => {
         case_insensitive_search(message.content, 'mes photos nues') ||
         case_insensitive_search(message.content, 'nakedphotos') ||
         case_insensitive_search(message.content, 'vip') ||
+        case_insensitive_search(message.content, 'My naked photos') ||
+        case_insensitive_search(message.content, 'https://viewc.site') ||
+        case_insensitive_search(message.content, 'https://nakedphotos.club') ||
+        case_insensitive_search(message.content, 'https://privatepage.vip') ||
+        case_insensitive_search(message.content, 'https://privatepage.vip/81ZH2Y?tx=d') ||
+        case_insensitive_search(message.content, 'my stream 18+') ||
+        case_insensitive_search(message.content, 'My stream without panties') ||
+        case_insensitive_search(message.content, '(dating 18+)') ||
         case_insensitive_search(message.content, '81zh2y')) {
         if (message.deleted) {
             //is deleted already by our other bot,no need to do anything in this case
