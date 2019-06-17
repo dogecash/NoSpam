@@ -55,7 +55,6 @@ client.on("message", async message => {
         case_insensitive_search(message.content, 'https://viewc.site') ||
         case_insensitive_search(message.content, 'https://nakedphotos.club') ||
         case_insensitive_search(message.content, 'https://privatepage.vip') ||
-        case_insensitive_search(message.content, 'https://privatepage.vip/81ZH2Y?tx=d') ||
         case_insensitive_search(message.content, 'my stream 18+') ||
         case_insensitive_search(message.content, 'My stream without panties') ||
         case_insensitive_search(message.content, '(dating 18+)') ||
