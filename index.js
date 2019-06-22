@@ -119,7 +119,7 @@ client.on("message", async message => {
         if (message.member.roles.some(r => ["Administrator", "Moderators", "Core Team"].includes(r.name)) && member.kickable)
             return message.reply("You have perms to ban the user");
         else if (!member.kickable) {
-            return message.reply("You dont have perms to ban the user");
+            return message.reply("You dont have perms to ban the user " + client.users.get(member).username.toString());
         } else {
             return message.reply("Out of options here")
         }
