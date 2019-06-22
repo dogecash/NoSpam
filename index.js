@@ -18,7 +18,6 @@ client.on("guildCreate", guild => {
 
 function case_insensitive_search(str, search_str) {
     var result = str.search(new RegExp(search_str, "i"));
-
     if (result > 0)
         return true;
     else
@@ -31,7 +30,6 @@ client.on("guildDelete", guild => {
 });
 client.on("message", async message => {
     // This event will run on every single message received, from any channel or DM.
-
     // It's good practice to ignore other bots. This also makes your bot ignore itself
     // and not get into a spam loop (we call that "botception").
     if (message.author.bot) return;
@@ -45,6 +43,7 @@ client.on("message", async message => {
     // command = say
     // args = ["Is", "this", "the", "real", "life?"]
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    var channellog = message.member.guild.channels.find('name', 'server-log')
     const command = args.shift().toLowerCase();
     if (case_insensitive_search(message.content, '18+') ||
         case_insensitive_search(message.content, 'my 18+ photos') ||
@@ -59,13 +58,26 @@ client.on("message", async message => {
         case_insensitive_search(message.content, 'My stream without panties') ||
         case_insensitive_search(message.content, '(dating 18+)') ||
         case_insensitive_search(message.content, '81zh2y')) {
-        if (message.deleted) {
-            //is deleted already by our other bot,no need to do anything in this case
-        } else {
-            await message.delete()
+        if (message.member.roles.some(r => ["Administrator", "Moderators", "Core Team", "Helpers", "Enthusiast"].includes(r.name)))
+            console.log("Cant ban,whitelisted role, message = " + message.content)
+        else {
+            if (message.deleted) {
+                //is deleted already by our other bot,no need to do anything in this case
+            } else {
+                await message.delete();
+            }
+            // inside a command, event listener, etc.
+            const exampleEmbed = new Discord.RichEmbed()
+                .setColor('#0099ff')
+                .setTitle('Found Blacklisted word')
+                .setAuthor('NoSpam', 'https://s2.coinmarketcap.com/static/img/coins/200x200/3672.png', 'https://dogec.io')
+                .setDescription(message.content)
+                .setThumbnail('https://s2.coinmarketcap.com/static/img/coins/200x200/3672.png')
+                .setImage(message.author.displayAvatarURL)
+                .setTimestamp();
+            channellog.send(exampleEmbed)
+            await message.guild.ban(message.author.id);
         }
-        await message.guild.ban(message.author.id)
-            //  message.channel.send('Banned Spammer,Begone Spammer');
     }
     // Let's go with a few common example commands! Feel free to delete or change those.
 
@@ -75,7 +87,19 @@ client.on("message", async message => {
         const m = await message.channel.send("Ping?");
         m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
     }
-
+    if (command === "testlog") {
+        var channellog = message.member.guild.channels.find('name', 'server-log');
+        // inside a command, event listener, etc.
+        const exampleEmbed = new Discord.RichEmbed()
+            .setColor('#0099ff')
+            .setTitle('Found Blacklisted word')
+            .setAuthor('NoSpam', 'https://s2.coinmarketcap.com/static/img/coins/200x200/3672.png', 'https://dogec.io')
+            .setDescription("test messagecontent")
+            .setThumbnail('https://s2.coinmarketcap.com/static/img/coins/200x200/3672.png')
+            .setImage(message.author.displayAvatarURL)
+            .setTimestamp();
+        channellog.send(exampleEmbed)
+    }
     if (command === "say") {
         // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
         // To get the "message" itself we join the `args` back into a string with spaces: 
