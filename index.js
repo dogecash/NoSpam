@@ -113,21 +113,16 @@ client.on("message", async message => {
     if (command === "canban") {
         // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
         // To get the "message" itself we join the `args` back into a string with spaces: 
-        const sayMessage = args.join(" ");
         // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
         message.delete().catch(O_o => {});
-        // And we get the bot to say the thing: 
         let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-
-        if (message.member.roles.some(r => ["Administrator", "Moderators", "Core Team"].includes(r.name)))
+        if (message.member.roles.some(r => ["Administrator", "Moderators", "Core Team"].includes(r.name)) && member.kickable)
             return message.reply("You have perms to ban the user");
         else if (!member.kickable) {
             return message.reply("You dont have perms to ban the user");
         } else {
             return message.reply("Out of options here")
         }
-
-        // message.channel.send(sayMessage);
     }
 
     if (command === "kick") {
